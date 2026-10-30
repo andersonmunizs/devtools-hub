@@ -2,7 +2,7 @@
 
 Utilitários para desenvolvedores em português, com processamento local no navegador. Astro gera páginas estáticas; React hidrata os controles interativos.
 
-**Estado:** seis ferramentas funcionais localmente; sem implantação pública. Tornar o código público e publicar o site são etapas distintas. Veja a [preparação do repositório](docs/21-REPOSITORIO-PUBLICO.md) e a [prontidão do site](docs/18-PRE-RELEASE.md).
+**Estado:** [código público no GitHub](https://github.com/andersonmunizs/devtools-hub), com seis ferramentas funcionais; sem implantação pública do site. Veja as [verificações de CI](https://github.com/andersonmunizs/devtools-hub/actions/workflows/ci.yml), o [registro do repositório](docs/21-REPOSITORIO-PUBLICO.md) e a [prontidão do site](docs/18-PRE-RELEASE.md).
 
 ## Ferramentas
 

@@ -233,3 +233,7 @@ A pessoa responsável priorizou UI/UX antes de GitHub/publicação. Implementado
 ## 17. Preparação para repositório público — 2026-10-30
 
 Autorizada a preparação local para GitHub, com segurança. README público, guias de contribuição/segurança, templates, avisos de terceiros, ignores, atributos de texto, Dependabot e endurecimento da CI preparados. Gate sem dependências novas verifica candidatos/index/histórico com diagnósticos redigidos; seis testes sintéticos verificam as proteções. Licença MIT escolhida; identificação pública do titular ainda pendente para finalizar LICENSE. Ver [21 — Repositório público](21-REPOSITORIO-PUBLICO.md). Nenhum commit, remote, push ou deploy criado nesta etapa.
+
+## 18. Publicação do código autorizada — 2026-10-30
+
+Criado [andersonmunizs/devtools-hub](https://github.com/andersonmunizs/devtools-hub) público, MIT com identidade pública `andersonmunizs`, autoria noreply e commit inicial enviado somente em `main`. Proteções de segredos/relatos privados e permissões restritas de Actions configuradas; CI Linux disparada. Reexecutados 286 unitários com sucesso, formato e scanner público sem achados nos padrões cobertos. Registro e limites em [21 — Repositório público](21-REPOSITORIO-PUBLICO.md). Nenhuma implantação do site; domínio, HTTPS, headers e demais gates de deploy continuam pendentes.

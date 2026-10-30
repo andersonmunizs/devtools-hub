@@ -59,7 +59,11 @@ Confirmados por API: relato privado de vulnerabilidades, secret scanning e push 
 
 Reexecutados 286 testes unitários com sucesso, além de formato e scanner público. A primeira execução dos unitários no sandbox falhou porque as fixtures não podiam escrever a configuração Git temporária; a execução com a permissão necessária passou sem alterar testes. O diff inicial contém quebras Markdown com espaços finais dos documentos originais, preservadas deliberadamente.
 
-Envio inicial, proteção da branch e CI Linux ainda em andamento. Somente `main` será enviada; referências internas do Codex e arquivos ignorados ficam locais. O site continua sem implantação pública.
+Commit inicial `8436f0a` enviado à branch `main`, confirmada como padrão e única branch pública no primeiro envio. Referências internas do Codex e arquivos ignorados ficaram locais. O GitHub reconheceu a licença MIT. A consulta de alertas abertos de Dependabot e secret scanning retornou zero; isso não comprova ausência de vulnerabilidades. MFA da conta não foi exposto pela credencial disponível e não foi alterado.
+
+A CI Linux foi disparada: [execuções de qualidade](https://github.com/andersonmunizs/devtools-hub/actions/workflows/ci.yml). No registro desta atualização, instalação congelada, scanner, lint, formato, tipos, unitários e build passaram; instalação dos navegadores/E2E/auditoria estavam em andamento. O resultado completo deve ser conferido na execução correspondente ao commit. Os 298 E2E aprovados anteriormente foram locais e não são apresentados como resultado Linux antecipado.
+
+Proteção planejada para `main` após este envio de documentação: exigir PR, check `verify` atualizado e resolução de conversas; bloquear force push e exclusão, inclusive para administrador. Sem exigir aprovação de uma segunda pessoa enquanto há apenas uma pessoa mantenedora. Dependabot já abriu propostas de atualização; nenhuma foi integrada automaticamente. O site continua sem implantação pública; próximo passo é definir domínio e hospedagem e executar os gates de deploy.
 
 ## Referências oficiais consultadas
 
