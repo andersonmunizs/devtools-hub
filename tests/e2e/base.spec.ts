@@ -140,7 +140,7 @@ test('JSON funcional e 404 não apresentam rotas falsas', async ({ page }) => {
     page.getByRole('button', { name: 'Formatar JSON', exact: true }),
   ).toBeEnabled();
   await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
-  const response = await page.goto('/pagina-inexistente/');
+  const response = await page.goto('/devtools-hub/pagina-inexistente/');
   expect(response?.status()).toBe(404);
   await expect(
     page.getByRole('heading', { name: 'Página não encontrada.' }),
