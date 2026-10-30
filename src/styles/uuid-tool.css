@@ -1,0 +1,60 @@
+.uuid-workbench {
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+}
+.uuid-workbench form {
+  margin-top: 24px;
+}
+.uuid-workbench label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+}
+.uuid-workbench input {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  min-height: 44px;
+  margin-top: 8px;
+  border: 1px solid var(--control-border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 10px 12px;
+  font: 16px/1.5 var(--font-mono);
+}
+.uuid-workbench input[aria-invalid='true'] {
+  border: 2px solid var(--error);
+}
+.uuid-workbench .example-confirm {
+  margin-top: 16px;
+}
+.uuid-result-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.uuid-list {
+  padding-left: 24px;
+}
+.uuid-list li {
+  padding-block: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.uuid-list code {
+  display: block;
+  font: 14px/1.7 var(--font-mono);
+  overflow-wrap: anywhere;
+  margin-bottom: 8px;
+}
+.uuid-manual textarea {
+  min-height: 120px;
+  margin-block: 8px 12px;
+}
+@media (max-width: 760px) {
+  .uuid-workbench {
+    grid-template-columns: 1fr;
+  }
+}

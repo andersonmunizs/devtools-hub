@@ -1,0 +1,81 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import HashTool from '../../components/react/HashTool';
+import '../../styles/text-tool.css';
+---
+
+<SiteLayout
+  title="SHA-256 de texto UTF-8"
+  description="Calcule SHA-256 de texto UTF-8 com Web Crypto no navegador e copie o resultado hexadecimal, sem envio para processamento remoto."
+>
+  <header class="tool-intro">
+    <a href="/#ferramentas" class="back-link">
+      ← Voltar ao catálogo
+    </a>
+    <p class="eyebrow">Hashes</p>
+    <h1>SHA-256 de texto UTF-8</h1>
+    <p class="tool-lead">
+      Calcule o hash do texto exato com Web Crypto. O resultado tem 64
+      caracteres hexadecimais; espaços e quebras de linha fazem diferença.
+    </p>
+    <p class="local-processing">
+      Processado no seu navegador <span aria-hidden="true">·</span> Sem
+      histórico de conteúdo
+    </p>
+  </header>
+  <HashTool client:load />
+  <noscript>
+    <p class="notice">
+      Ative o JavaScript para calcular SHA-256. Os controles ficam desabilitados
+      sem ele.
+    </p>
+  </noscript>
+  <section class="tool-explanation" aria-labelledby="hash-about">
+    <div>
+      <h2 id="hash-about">Os bytes do texto importam</h2>
+      <p>
+        O texto é codificado com <code>TextEncoder</code> em UTF-8 e processado
+        por <code>crypto.subtle.digest('SHA-256', …)</code>. Não há remoção de
+        espaços, normalização Unicode ou BOM adicionado. Um BOM presente na
+        entrada faz parte do cálculo. Surrogates isolados são rejeitados,
+        evitando substituição silenciosa.
+      </p>
+      <p>
+        Texto vazio é válido e tem seu próprio hash. O exemplo sintético é{' '}
+        <code>abc</code>, sem quebra de linha ao final. Acentos visualmente
+        iguais podem ter bytes diferentes e hashes diferentes.
+      </p>
+    </div>
+    <div>
+      <h2>Limites e processamento</h2>
+      <p>
+        Até <strong>1 MiB (1.048.576 bytes UTF-8)</strong> de entrada por
+        cálculo. Esta ferramenta recebe texto, não arquivos ou bytes binários. O
+        campo multilinha do navegador normaliza quebras CR/CRLF para LF; o hash
+        corresponde ao texto do campo.
+      </p>
+      <p>
+        Requer contexto seguro (HTTPS ou localhost confiável) e suporte a
+        SubtleCrypto. Sem suporte, não há cálculo alternativo. Durante o
+        cálculo, uma nova execução fica bloqueada. Editar ou limpar descarta o
+        resultado pendente da interface; a operação nativa já iniciada não pode
+        ser cancelada.
+      </p>
+    </div>
+    <div>
+      <h2>Uso e privacidade</h2>
+      <p>
+        Hashing não cifra o texto e não oferece uma operação de decodificação.
+        Entradas previsíveis podem ser descobertas por tentativas. SHA-256 puro
+        não substitui um mecanismo apropriado de armazenamento de senhas. O hash
+        de um conteúdo sensível também pode ser sensível.
+      </p>
+      <p>
+        Entrada e resultado ficam apenas em memória, sem histórico ou envio para
+        processamento remoto. Copiar exige ação explícita e usa a área de
+        transferência do dispositivo.{' '}
+        <a href="/privacidade/">Leia os limites de privacidade.</a>
+      </p>
+    </div>
+  </section>
+</SiteLayout>

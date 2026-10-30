@@ -1,0 +1,45 @@
+<div class="theme-control" hidden data-theme-control>
+  <label for="theme">Tema</label>
+  <select id="theme" name="theme">
+    <option value="system">Sistema</option>
+    <option value="light">Claro</option>
+    <option value="dark">Escuro</option>
+  </select>
+  <span class="sr-only" role="status" id="theme-status"></span>
+</div>
+
+<script>
+  const select = document.querySelector<HTMLSelectElement>('#theme');
+  const control = document.querySelector<HTMLElement>('[data-theme-control]');
+  const status = document.querySelector('#theme-status');
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  if (select && control) {
+    select.value =
+      document.documentElement.dataset['themePreference'] ?? 'system';
+    control.hidden = false;
+    const apply = () => {
+      const preference = select.value;
+      document.documentElement.dataset['themePreference'] = preference;
+      document.documentElement.dataset['theme'] =
+        preference === 'system'
+          ? media.matches
+            ? 'dark'
+            : 'light'
+          : preference;
+    };
+    select.addEventListener('change', () => {
+      apply();
+      try {
+        localStorage.setItem('devtools-theme', select.value);
+        if (status) status.textContent = 'Preferência de tema salva.';
+      } catch {
+        if (status)
+          status.textContent =
+            'Tema aplicado nesta página. Não foi possível salvar a preferência.';
+      }
+    });
+    // Static navigation disposes of the document and its listeners together.
+    media.addEventListener('change', apply);
+    apply();
+  }
+</script>

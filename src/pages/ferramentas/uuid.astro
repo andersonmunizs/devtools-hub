@@ -1,0 +1,74 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import UuidTool from '../../components/react/UuidTool';
+import '../../styles/text-tool.css';
+import '../../styles/uuid-tool.css';
+---
+
+<SiteLayout
+  title="Gerador UUID v4"
+  description="Gere de 1 a 20 UUIDs v4 com Web Crypto no navegador. Copie um identificador ou toda a lista, sem histórico de conteúdo."
+>
+  <header class="tool-intro">
+    <a href="/#ferramentas" class="back-link">
+      ← Voltar ao catálogo
+    </a>
+    <p class="eyebrow">Identificadores</p>
+    <h1>Gerador UUID v4</h1>
+    <p class="tool-lead">
+      Gere de 1 a 20 identificadores com Web Crypto. Copie um UUID ou toda a
+      lista, com um identificador por linha.
+    </p>
+    <p class="local-processing">
+      Processado no seu navegador <span aria-hidden="true">·</span> Sem
+      histórico de conteúdo
+    </p>
+  </header>
+  <UuidTool client:load />
+  <noscript>
+    <p class="notice">
+      Ative o JavaScript para gerar UUIDs. Os controles ficam desabilitados sem
+      ele.
+    </p>
+  </noscript>
+  <section class="tool-explanation" aria-labelledby="uuid-about">
+    <div>
+      <h2 id="uuid-about">Versão 4, com Web Crypto</h2>
+      <p>
+        A geração usa exclusivamente <code>crypto.randomUUID()</code>. UUID v4
+        possui 36 caracteres, incluindo hífens, com versão 4 e variante
+        padronizada. A API usa aleatoriedade criptograficamente segura; o site
+        não implementa um gerador próprio.
+      </p>
+      <p>
+        É necessário um contexto seguro, como HTTPS ou localhost confiável, e
+        suporte à API no navegador. Se não estiver disponível, a ferramenta não
+        gera valores alternativos.
+      </p>
+    </div>
+    <div>
+      <h2>Quantidade e uso</h2>
+      <p>
+        Informe um inteiro de 1 a 20, sem espaços, sinais, zeros à esquerda ou
+        casas decimais. O exemplo define apenas a quantidade 3; os UUIDs só são
+        gerados ao acionar o botão. Cada geração substitui a lista anterior.
+        Limpar descarta a lista e retorna a quantidade para 1.
+      </p>
+      <p>
+        UUIDs são identificadores, não uma garantia matemática de unicidade nem
+        um mecanismo de autorização. Em sistemas com persistência, a aplicação
+        responsável deve tratar colisões conforme suas regras.
+      </p>
+    </div>
+    <div>
+      <h2>Cópia e privacidade</h2>
+      <p>
+        Editar a quantidade descarta os UUIDs anteriores. Os valores ficam
+        apenas em memória, sem requests de processamento, armazenamento ou
+        histórico pelo aplicativo. Copiar exige ação explícita e usa a área de
+        transferência do dispositivo. Se falhar, há seleção manual do texto
+        escolhido. <a href="/privacidade/">Leia os limites de privacidade.</a>
+      </p>
+    </div>
+  </section>
+</SiteLayout>

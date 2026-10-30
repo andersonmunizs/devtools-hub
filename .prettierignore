@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.tools/
+pnpm-lock.yaml
+playwright-report/
+test-results/
+coverage/
+# Preserve the supplied specification package verbatim.
+AGENTS.md
+README.md
+docs/0[1-9]-*.md
+prompts/
+texte.txt

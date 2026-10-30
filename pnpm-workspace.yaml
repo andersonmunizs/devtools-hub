@@ -1,0 +1,9 @@
+packages:
+  - .
+engineStrict: true
+saveExact: true
+autoInstallPeers: false
+minimumReleaseAgeStrict: true
+allowBuilds:
+  esbuild: true
+  sharp: false

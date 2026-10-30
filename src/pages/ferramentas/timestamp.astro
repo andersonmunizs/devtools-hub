@@ -1,0 +1,86 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import TimestampTool from '../../components/react/TimestampTool';
+import '../../styles/text-tool.css';
+---
+
+<SiteLayout
+  title="Conversor de tempo Unix"
+  description="Converta timestamps em segundos ou milissegundos para UTC ISO 8601 e horário no fuso do navegador, com processamento local."
+>
+  <header class="tool-intro">
+    <a href="/#ferramentas" class="back-link">
+      ← Voltar ao catálogo
+    </a>
+    <p class="eyebrow">Datas e tempo</p>
+    <h1>Conversor de tempo Unix</h1>
+    <p class="tool-lead">
+      Informe um timestamp e escolha a unidade no botão. Veja o mesmo instante
+      em UTC e no fuso horário do navegador, sem detecção automática de unidade.
+    </p>
+    <p class="local-processing">
+      Processado no seu navegador <span aria-hidden="true">·</span> Sem
+      histórico de conteúdo
+    </p>
+  </header>
+  <TimestampTool client:load />
+  <noscript>
+    <p class="notice">
+      Ative o JavaScript para converter. Os controles ficam desabilitados sem
+      ele.
+    </p>
+  </noscript>
+  <section class="tool-explanation" aria-labelledby="timestamp-about">
+    <div>
+      <h2 id="timestamp-about">Segundos ou milissegundos</h2>
+      <p>
+        Unix conta o tempo desde 1 de janeiro de 1970, às 00:00:00 UTC. O valor{' '}
+        <code>0</code> é essa época; valores negativos representam instantes
+        anteriores. Escolha explicitamente <strong>Converter segundos</strong>{' '}
+        ou <strong>Converter milissegundos</strong>. O exemplo sintético é{' '}
+        <code>1700000000</code> em segundos, equivalente a{' '}
+        <code>1700000000000</code> em milissegundos.
+      </p>
+      <p>
+        Segundos aceitam até três casas decimais com ponto, como{' '}
+        <code>-0.001</code>. Milissegundos aceitam apenas inteiros. Sinal
+        inicial é opcional. Não use espaços, vírgulas, separadores de milhares,
+        notação exponencial ou datas por extenso. Não há arredondamento ou
+        truncamento silencioso.
+      </p>
+    </div>
+    <div>
+      <h2>Um instante, dois horários</h2>
+      <p>
+        O timestamp representa um instante independente de fuso. O resultado
+        mostra UTC em ISO 8601, horário no fuso identificado pelo navegador e
+        ambos os valores Unix. O fuso e seu deslocamento aparecem no texto; o
+        horário não é inferido pelo idioma nem pelo endereço IP.
+      </p>
+      <p>
+        A API <code>Intl.DateTimeFormat</code> usa as regras de fuso do
+        navegador para aquele instante, inclusive horário de verão. Datas
+        históricas dependem da base de fusos instalada. UTC usa <code>Z</code>;
+        anos fora de 0000–9999 usam a forma ISO estendida com sinal. A
+        apresentação local inclui a era do calendário gregoriano.
+      </p>
+    </div>
+    <div>
+      <h2>Limites e privacidade</h2>
+      <p>
+        Entrada de até <strong>1 MiB (1.048.576 bytes UTF-8)</strong> por ação.
+        Vazio, valores não numéricos e datas fora de ±8.640.000.000.000.000
+        milissegundos são rejeitados, sem resultado parcial. A precisão é de um
+        milissegundo; segundos intercalares não são representados pela API Date.
+        Esta ferramenta recebe timestamps numéricos, não datas locais para
+        conversão inversa.
+      </p>
+      <p>
+        Entrada e saída ficam em memória. Editar invalida o resultado; limpar
+        remove o estado. Copiar exige ação explícita e usa a área de
+        transferência do dispositivo.{' '}
+        <a href="/privacidade/">Leia os limites de privacidade.</a>
+      </p>
+    </div>
+  </section>
+</SiteLayout>

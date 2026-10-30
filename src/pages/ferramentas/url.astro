@@ -1,0 +1,90 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import UrlComponentTool from '../../components/react/UrlComponentTool';
+import '../../styles/text-tool.css';
+---
+
+<SiteLayout
+  title="Componente de URL"
+  description="Codifique e decodifique componentes de URL com UTF-8 e percent-encoding no navegador, sem envio de conteúdo para processamento remoto."
+>
+  <header class="tool-intro">
+    <a href="/#ferramentas" class="back-link">
+      ← Voltar ao catálogo
+    </a>
+    <p class="eyebrow">Dados e formatos</p>
+    <h1>Componente de URL</h1>
+    <p class="tool-lead">
+      Converta uma parte da URL, como o valor de um parâmetro. Este utilitário
+      não valida URLs nem codifica uma URL inteira.
+    </p>
+    <p class="local-processing">
+      Processado no seu navegador <span aria-hidden="true">·</span> Sem
+      histórico de conteúdo
+    </p>
+  </header>
+  <UrlComponentTool client:load />
+  <noscript>
+    <p class="notice">
+      Ative o JavaScript para codificar e decodificar. Os controles ficam
+      desabilitados sem ele.
+    </p>
+  </noscript>
+  <section class="tool-explanation" aria-labelledby="url-about">
+    <div>
+      <h2 id="url-about">Um componente por vez</h2>
+      <p>
+        Usa <code>encodeURIComponent</code> e <code>decodeURIComponent</code>.
+        Caracteres reservados como <code>&amp; ? # / =</code> são codificados;
+        letras ASCII, números e <code>- _ . ! ~ * ' ( )</code> permanecem.
+        Acentos e emoji usam bytes UTF-8 em sequências percentuais.
+      </p>
+      <p>
+        Espaço vira <code>%20</code> e <code>+</code> vira <code>%2B</code> ao
+        codificar. Ao decodificar, <code>+</code> permanece literal: isto não é
+        um conversor de formulários{' '}
+        <code>application/x-www-form-urlencoded</code>.
+      </p>
+      <p>
+        Cada ação converte uma única camada: codificar <code>%20</code> produz{' '}
+        <code>%2520</code>; decodificar <code>%2520</code> produz{' '}
+        <code>%20</code>. Não há detecção automática, normalização ou remoção de
+        espaços.
+      </p>
+    </div>
+    <div>
+      <h2>Erros e limites</h2>
+      <p>
+        Cada <code>%</code> precisa de dois dígitos hexadecimais. Sequências
+        percentuais com UTF-8 inválido causam erro, sem resultado parcial.
+        Codificar rejeita surrogates Unicode isolados. Texto não escapado segue
+        o comportamento nativo de <code>decodeURIComponent</code>.
+      </p>
+      <p>
+        Até <strong>1 MiB (1.048.576 bytes UTF-8) de entrada</strong> por ação.
+        A codificação pode gerar até 3 MiB de caracteres ASCII; uma saída acima
+        de 1 MiB não pode ser reutilizada inteira como nova entrada aqui. Vazio
+        é válido nas duas direções. Unicode não é normalizado e BOM é
+        preservado.
+      </p>
+      <p>
+        Os campos multilinha normalizam quebras de linha para LF. O botão Copiar
+        usa o resultado original, inclusive CR/CRLF decodificado, sujeito às
+        regras da área de transferência do sistema.
+      </p>
+    </div>
+    <div>
+      <h2>Uso e privacidade</h2>
+      <p>
+        O resultado é apenas texto: links não são abertos e HTML não é
+        interpretado. Percent-encoding não cifra nem oculta segredos. Entrada e
+        saída ficam em memória. Editar invalida o resultado anterior; limpar
+        remove o estado da ferramenta.
+      </p>
+      <p>
+        Copiar exige ação explícita e usa a área de transferência do
+        dispositivo. <a href="/privacidade/">Leia os limites de privacidade.</a>
+      </p>
+    </div>
+  </section>
+</SiteLayout>

@@ -1,0 +1,50 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import SearchTools from '../components/react/SearchTools';
+import { publishedTools } from '../data/tools';
+---
+
+<SiteLayout
+  title="Ferramentas para dados e debugging"
+  description="Valide JSON, converta Base64, componentes de URL e tempo Unix, gere UUIDs e calcule SHA-256 no navegador. Catálogo de utilitários sem cadastro e sem histórico de conteúdo."
+>
+  <section class="hero" aria-labelledby="home-heading">
+    <p class="eyebrow hero-kicker">
+      <span class="accent-line" aria-hidden="true"></span> Utilitários para
+      desenvolvedores
+    </p>
+    <h1 id="home-heading">
+      Ferramentas rápidas para <span>dados e debugging.</span>
+    </h1>
+    <p class="hero-description">
+      Formate, converta e valide dados diretamente no navegador.
+    </p>
+  </section>
+  <SearchTools tools={publishedTools} client:load />
+  <noscript>
+    <p class="notice">
+      Ative o JavaScript para usar a busca. Os links do catálogo continuam
+      disponíveis.
+    </p>
+  </noscript>
+  <section class="principles" aria-labelledby="principles-heading">
+    <h2 id="principles-heading">Seus dados ficam no navegador.</h2>
+    <dl>
+      <div>
+        <dt>Sem conta</dt>
+        <dd>Sem cadastro para acessar o catálogo.</dd>
+      </div>
+      <div>
+        <dt>Busca local</dt>
+        <dd>O termo pesquisado fica neste navegador.</dd>
+      </div>
+      <div>
+        <dt>Sem histórico salvo</dt>
+        <dd>O site não armazena suas buscas.</dd>
+      </div>
+    </dl>
+    <a href="/privacidade/" class="text-link">
+      Entenda a privacidade do projeto <span aria-hidden="true">→</span>
+    </a>
+  </section>
+</SiteLayout>

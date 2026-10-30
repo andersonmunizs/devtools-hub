@@ -1,0 +1,18 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout
+  title="Página não encontrada"
+  description="Esta página não existe. Volte ao catálogo do DevTools Hub."
+  noindex
+>
+  <section class="prose-page not-found">
+    <p class="eyebrow">Erro 404</p>
+    <h1>Página não encontrada.</h1>
+    <p class="lead">O endereço pode ter mudado ou a página ainda não existe.</p>
+    <a class="button-link" href="/">
+      Voltar ao catálogo <span aria-hidden="true">→</span>
+    </a>
+  </section>
+</SiteLayout>

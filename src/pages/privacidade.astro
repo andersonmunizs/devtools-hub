@@ -1,0 +1,68 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout
+  title="Privacidade"
+  description="O que fica no navegador, o que a hospedagem pode registrar e os limites de privacidade do DevTools Hub."
+>
+  <article class="prose-page">
+    <a href="/" class="back-link">
+      ← Voltar ao catálogo
+    </a>
+    <p class="eyebrow">Transparência</p>
+    <h1>Privacidade, em termos claros.</h1>
+    <p class="lead">
+      A busca e o processamento de JSON, Base64, componentes de URL, tempo Unix
+      e UUID v4 acontecem neste navegador.
+    </p>
+    <h2>O que fica no navegador</h2>
+    <p>
+      O termo da busca, a entrada e a saída das ferramentas permanecem em
+      memória, sem serem enviados para processamento remoto, incluídos na URL ou
+      salvos pelo aplicativo. O site não mantém histórico de conteúdo. Editar a
+      entrada invalida o resultado anterior; limpar remove o estado da
+      ferramenta. O aplicativo não restaura o conteúdo ao recarregar.
+    </p>
+    <p>
+      Ao escolher um tema, apenas essa preferência é salva no armazenamento
+      local. Se o navegador bloquear o armazenamento, o tema continua
+      funcionando na página atual.
+    </p>
+    <h2>Sem rastreamento de aplicação</h2>
+    <p>
+      Não usamos analytics, anúncios, cookies próprios, fontes externas ou
+      serviços de captura de erros. Os recursos da interface são servidos junto
+      com o site.
+    </p>
+    <h2>O que a hospedagem pode registrar</h2>
+    <p>
+      O servidor ou CDN que entrega os arquivos pode registrar acessos técnicos,
+      incluindo IP e metadados de requisição, conforme sua configuração e
+      contrato. Isso é diferente de receber o texto digitado na busca ou nas
+      ferramentas JSON, Base64, componentes de URL, tempo Unix, UUID v4 e
+      SHA-256.
+    </p>
+    <h2>Limites dessa proteção</h2>
+    <p>
+      Extensões, malware, o sistema operacional e a restauração de formulários
+      pelo navegador ficam fora do controle do site. Não prometemos privacidade
+      absoluta nem apagamento seguro da memória do dispositivo.
+    </p>
+    <h2>Área de transferência</h2>
+    <p>
+      Copiar um resultado exige uma ação explícita no botão. O resultado é
+      gravado na área de transferência do dispositivo, cuja retenção e
+      sincronização dependem do sistema e dos aplicativos instalados. Se a cópia
+      automática falhar, a ferramenta oferece seleção para cópia manual.
+    </p>
+    <h2>Próximas ferramentas</h2>
+    <p>
+      JSON, Base64 UTF-8, componentes de URL, tempo Unix, UUID v4 e SHA-256
+      estão disponíveis. Outras transformações locais entrarão no catálogo após
+      testes de funcionamento, acessibilidade e privacidade. Esta página será
+      atualizada quando o comportamento do produto mudar.
+    </p>
+    <p class="updated">Atualizado em 30 de outubro de 2026.</p>
+  </article>
+</SiteLayout>

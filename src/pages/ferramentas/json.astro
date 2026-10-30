@@ -1,0 +1,84 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import JsonTool from '../../components/react/JsonTool';
+import '../../styles/text-tool.css';
+---
+
+<SiteLayout
+  title="Validador e formatador JSON"
+  description="Valide, formate com dois espaços ou minifique JSON no navegador. Sem enviar seu conteúdo para processamento remoto."
+>
+  <header class="tool-intro">
+    <a href="/#ferramentas" class="back-link">
+      ← Voltar ao catálogo
+    </a>
+    <p class="eyebrow">Dados e formatos</p>
+    <h1>Validador e formatador JSON</h1>
+    <p class="tool-lead">
+      Valide e organize JSON sem enviar conteúdo a um servidor.
+    </p>
+    <p class="local-processing">
+      Processado no seu navegador <span aria-hidden="true">·</span> Sem
+      histórico de conteúdo
+    </p>
+  </header>
+  <JsonTool client:load />
+  <noscript>
+    <p class="notice">
+      Ative o JavaScript para validar, formatar e minificar JSON. Os controles
+      ficam desabilitados sem ele.
+    </p>
+  </noscript>
+  <section class="tool-explanation" aria-labelledby="json-about">
+    <div>
+      <h2 id="json-about">O que esta ferramenta faz</h2>
+      <p>
+        Reconhece objetos, arrays e valores primitivos JSON. Formatar usa dois
+        espaços; minificar remove espaços desnecessários. O processamento
+        acontece somente ao acionar um botão.
+      </p>
+      <p>
+        Não executa código, corrige texto ou ordena chaves por conta própria. A
+        saída segue <code>JSON.parse</code> e <code>JSON.stringify</code>:
+        chaves numéricas podem mudar de ordem, e chaves repetidas mantêm o
+        último valor.
+      </p>
+    </div>
+    <div>
+      <h2>Limites e precisão</h2>
+      <p>
+        Entrada de até <strong>1 MiB em UTF-8</strong> por ação. Saída de até{' '}
+        <strong>8 MiB</strong>; uma indentação muito expansiva retorna erro,
+        nunca texto cortado. Estruturas profundas também podem exceder a
+        capacidade do navegador.
+      </p>
+      <p>
+        <strong>Precisão numérica JavaScript:</strong> números grandes podem ser
+        arredondados, <code>-0</code> vira <code>0</code> e números fora do
+        intervalo finito podem virar <code>null</code>. Para preservar dígitos
+        exatamente, represente identificadores e valores de alta precisão como
+        strings no JSON original.
+      </p>
+      <p>
+        Unicode segue as APIs nativas: surrogates isolados são escapados na
+        saída. O contador usa o tamanho UTF-8 de <code>TextEncoder</code>, que
+        conta esses casos como caractere de substituição, sem alterar a entrada.
+      </p>
+    </div>
+    <div>
+      <h2>Uso e privacidade</h2>
+      <p>
+        Entrada e saída permanecem em memória, sem envio para processamento
+        remoto, URLs ou armazenamento pelo aplicativo. Editar a entrada descarta
+        o resultado anterior. Limpar remove o estado da ferramenta; recarregar
+        não recupera o conteúdo pelo aplicativo.
+      </p>
+      <p>
+        Copiar só ocorre ao acionar o botão e grava o resultado na área de
+        transferência do dispositivo. Extensões e recursos de restauração do
+        navegador ficam fora do controle do site.{' '}
+        <a href="/privacidade/">Leia os limites de privacidade.</a>
+      </p>
+    </div>
+  </section>
+</SiteLayout>
