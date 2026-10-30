@@ -1,16 +1,45 @@
 import { expect, test } from '@playwright/test';
 
 const routes = [
-  '/',
-  '/privacidade/',
-  '/ferramentas/json/',
-  '/ferramentas/base64/',
-  '/ferramentas/url/',
-  '/ferramentas/timestamp/',
-  '/ferramentas/uuid/',
-  '/ferramentas/hash/',
-  '/404.html',
+  '/devtools-hub/',
+  '/devtools-hub/privacidade/',
+  '/devtools-hub/ferramentas/json/',
+  '/devtools-hub/ferramentas/base64/',
+  '/devtools-hub/ferramentas/url/',
+  '/devtools-hub/ferramentas/timestamp/',
+  '/devtools-hub/ferramentas/uuid/',
+  '/devtools-hub/ferramentas/hash/',
+  '/devtools-hub/404.html',
 ] as const;
+
+test('Pages usa canonical e sitemap reais e mantém 404 fora do índice', async ({
+  page,
+}) => {
+  for (const route of routes) {
+    await page.goto(route);
+    const canonical = page.locator('link[rel="canonical"]');
+    if (route.endsWith('404.html')) await expect(canonical).toHaveCount(0);
+    else
+      await expect(canonical).toHaveAttribute(
+        'href',
+        `https://andersonmunizs.github.io${route}`,
+      );
+  }
+  const sitemap = await page.request.get('/devtools-hub/sitemap.xml');
+  expect(sitemap.status()).toBe(200);
+  const xml = await sitemap.text();
+  expect(xml.match(/<loc>/g)).toHaveLength(8);
+  for (const route of routes.filter((route) => !route.endsWith('404.html')))
+    expect(xml).toContain(
+      `<loc>https://andersonmunizs.github.io${route}</loc>`,
+    );
+  expect(xml).not.toContain('404');
+  expect(
+    await (await page.request.get('/devtools-hub/robots.txt')).text(),
+  ).toContain(
+    'Sitemap: https://andersonmunizs.github.io/devtools-hub/sitemap.xml',
+  );
+});
 
 test('candidata estática tem metadata única, idioma, CSP e recursos locais', async ({
   page,
@@ -51,7 +80,7 @@ test('candidata estática tem metadata única, idioma, CSP e recursos locais', a
       expect(new URL(resource, page.url()).origin).toBe(
         'http://127.0.0.1:4321',
       );
-    if (path === '/404.html')
+    if (path === '/devtools-hub/404.html')
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
         'content',
         'noindex, nofollow',

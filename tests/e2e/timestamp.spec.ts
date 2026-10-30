@@ -9,7 +9,7 @@ import {
 test.use({ timezoneId: 'America/Cuiaba' });
 
 async function openTimestamp(page: Page) {
-  await page.goto('/ferramentas/timestamp/');
+  await page.goto('/devtools-hub/ferramentas/timestamp/');
   await expect(page.getByLabel('Timestamp Unix de entrada')).toBeEnabled();
 }
 
@@ -25,7 +25,7 @@ test('catálogo → exemplo → segundos e milissegundos → copiar → limpar',
       },
     });
   });
-  await page.goto('/');
+  await page.goto('/devtools-hub/');
   await page.getByRole('searchbox').fill('epoch');
   await page.getByRole('link', { name: /Conversor de tempo Unix/ }).click();
   await expect(page).toHaveTitle('Conversor de tempo Unix — DevTools Hub');
@@ -152,7 +152,9 @@ test('fuso do contexto e horário de verão refletem o instante sem deslocamento
     const context = await browser.newContext({ timezoneId: zone });
     const page = await context.newPage();
     try {
-      await page.goto('http://127.0.0.1:4321/ferramentas/timestamp/');
+      await page.goto(
+        'http://127.0.0.1:4321/devtools-hub/ferramentas/timestamp/',
+      );
       await expect(page.getByLabel('Timestamp Unix de entrada')).toBeEnabled();
       for (const [input, time, offset] of cases) {
         await page.getByLabel('Timestamp Unix de entrada').fill(input);
@@ -253,7 +255,9 @@ test('input hostil e resultado não geram rede, storage, URL ou execução', asy
   expect(await page.getByLabel('Datas e valores Unix').inputValue()).toContain(
     TIMESTAMP_EXAMPLE_ISO,
   );
-  expect(page.url()).toBe('http://127.0.0.1:4321/ferramentas/timestamp/');
+  expect(page.url()).toBe(
+    'http://127.0.0.1:4321/devtools-hub/ferramentas/timestamp/',
+  );
   expect(
     await page.evaluate(async () => ({
       local: Object.keys(localStorage),
@@ -351,7 +355,9 @@ test('sem JavaScript mantém conteúdo e controles desabilitados', async ({
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   try {
-    await page.goto('http://127.0.0.1:4321/ferramentas/timestamp/');
+    await page.goto(
+      'http://127.0.0.1:4321/devtools-hub/ferramentas/timestamp/',
+    );
     await expect(
       page.getByRole('heading', {
         name: 'Conversor de tempo Unix',

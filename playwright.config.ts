@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   webServer: {
     command: `"${process.execPath}" scripts/astro.mjs preview --host 127.0.0.1 --port 4321`,
-    url: 'http://127.0.0.1:4321',
+    url: 'http://127.0.0.1:4321/devtools-hub/',
     reuseExistingServer: false,
     timeout: 30_000,
   },

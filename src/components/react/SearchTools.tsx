@@ -137,7 +137,7 @@ export default function SearchTools({ tools }: { tools: readonly Tool[] }) {
             return (
               <li key={tool.slug}>
                 <a
-                  href={'/ferramentas/' + tool.slug + '/'}
+                  href={'/devtools-hub/ferramentas/' + tool.slug + '/'}
                   className={'tool-entry tool-' + tool.slug}
                 >
                   <span className="tool-icon">

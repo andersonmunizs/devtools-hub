@@ -8,7 +8,7 @@ import {
 } from '../../src/data/hash-example';
 
 async function openHash(page: Page) {
-  await page.goto('/ferramentas/hash/');
+  await page.goto('/devtools-hub/ferramentas/hash/');
   await expect(page.getByLabel('Texto de entrada UTF-8')).toBeEnabled();
 }
 const reference = (text: string) =>
@@ -26,7 +26,7 @@ test('catálogo → exemplo → SHA-256 nativo → copiar → limpar', async ({
       },
     }),
   );
-  await page.goto('/');
+  await page.goto('/devtools-hub/');
   await page.getByRole('searchbox').fill('checksum');
   await page.getByRole('link', { name: /SHA-256 de texto UTF-8/ }).click();
   await expect(page).toHaveTitle('SHA-256 de texto UTF-8 — DevTools Hub');
@@ -285,7 +285,9 @@ test('HTML hostil é texto e hash, sem rede, armazenamento ou URL de conteúdo',
   ).toEqual({ local: [], session: [], databases: [], cookie: '' });
   expect(requests).toEqual([]);
   expect(errors).toEqual([]);
-  expect(page.url()).toBe('http://127.0.0.1:4321/ferramentas/hash/');
+  expect(page.url()).toBe(
+    'http://127.0.0.1:4321/devtools-hub/ferramentas/hash/',
+  );
   await expect(page.locator('html')).not.toHaveAttribute('data-test-csp');
   await page.reload();
   await expect(page.getByLabel('Texto de entrada UTF-8')).toBeEnabled();
@@ -359,7 +361,7 @@ test('sem JavaScript mantém explicações e controles desabilitados', async ({
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   try {
-    await page.goto('http://127.0.0.1:4321/ferramentas/hash/');
+    await page.goto('http://127.0.0.1:4321/devtools-hub/ferramentas/hash/');
     await expect(
       page.getByRole('heading', {
         name: 'SHA-256 de texto UTF-8',
