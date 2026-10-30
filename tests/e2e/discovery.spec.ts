@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('busca por tarefa, filtros combinados e recuperação sem perder foco', async ({
   page,
 }) => {
-  await page.goto('/');
+  await page.goto('/devtools-hub/');
   const search = page.getByRole('searchbox');
   await search.fill('converter data');
   await expect(
@@ -31,5 +31,5 @@ test('busca por tarefa, filtros combinados e recuperação sem perder foco', asy
   await search.fill('parametro url');
   await expect(page.locator('.tool-list a')).toHaveCount(1);
   await page.getByRole('link', { name: /Componente de URL/ }).click();
-  await expect(page).toHaveURL('/ferramentas/url/');
+  await expect(page).toHaveURL('/devtools-hub/ferramentas/url/');
 });

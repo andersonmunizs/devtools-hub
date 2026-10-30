@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { JSON_EXAMPLE } from '../../src/data/json-example';
 
 async function openJson(page: Page) {
-  await page.goto('/ferramentas/json/');
+  await page.goto('/devtools-hub/ferramentas/json/');
   await expect(page.getByLabel('Entrada JSON', { exact: true })).toBeEnabled();
 }
 
@@ -20,7 +20,7 @@ test('home → buscar JSON → formatar/minificar → copiar → limpar', async 
       },
     });
   });
-  await page.goto('/');
+  await page.goto('/devtools-hub/');
   await page.getByRole('searchbox').fill('pretty print');
   await page.getByRole('link', { name: /Validador e formatador JSON/ }).click();
   await expect(page).toHaveTitle('Validador e formatador JSON — DevTools Hub');
@@ -244,7 +244,9 @@ test('JSON hostil permanece texto, sem envio, storage ou URL de conteúdo', asyn
   expect(
     await page.evaluate(() => Object.hasOwn(Object.prototype, 'polluted')),
   ).toBe(false);
-  expect(page.url()).toBe('http://127.0.0.1:4321/ferramentas/json/');
+  expect(page.url()).toBe(
+    'http://127.0.0.1:4321/devtools-hub/ferramentas/json/',
+  );
   const storage = await page.evaluate(async () => ({
     local: { ...localStorage },
     session: { ...sessionStorage },

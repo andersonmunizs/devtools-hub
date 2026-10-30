@@ -4,7 +4,7 @@ import { expect, test, type Page } from '@playwright/test';
 const pattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 async function openUuid(page: Page) {
-  await page.goto('/ferramentas/uuid/');
+  await page.goto('/devtools-hub/ferramentas/uuid/');
   await expect(page.getByLabel('Quantidade de UUIDs')).toBeEnabled();
 }
 async function mockClipboard(page: Page) {
@@ -23,7 +23,7 @@ test('catálogo → exemplo → gerar via Web Crypto → cópia individual e lis
   page,
 }) => {
   await mockClipboard(page);
-  await page.goto('/');
+  await page.goto('/devtools-hub/');
   await page.getByRole('searchbox').fill('guid');
   await page.getByRole('link', { name: /Gerador UUID v4/ }).click();
   await expect(page).toHaveTitle('Gerador UUID v4 — DevTools Hub');
@@ -302,7 +302,9 @@ test('gera e copia sem rede, storage ou URL de conteúdo; reload descarta lista'
       cookie: document.cookie,
     })),
   ).toEqual({ local: [], session: [], databases: [], cookie: '' });
-  expect(page.url()).toBe('http://127.0.0.1:4321/ferramentas/uuid/');
+  expect(page.url()).toBe(
+    'http://127.0.0.1:4321/devtools-hub/ferramentas/uuid/',
+  );
   expect(requests).toEqual([]);
   expect(errors).toEqual([]);
   await expect(page.locator('html')).not.toHaveAttribute('data-test-csp');
@@ -367,7 +369,7 @@ test('sem JavaScript mantém conteúdo estático e controles desabilitados', asy
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   try {
-    await page.goto('http://127.0.0.1:4321/ferramentas/uuid/');
+    await page.goto('http://127.0.0.1:4321/devtools-hub/ferramentas/uuid/');
     await expect(
       page.getByRole('heading', { name: 'Gerador UUID v4', exact: true }),
     ).toBeVisible();

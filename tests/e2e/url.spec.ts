@@ -6,7 +6,7 @@ import {
 } from '../../src/data/url-example';
 
 async function openUrl(page: Page) {
-  await page.goto('/ferramentas/url/');
+  await page.goto('/devtools-hub/ferramentas/url/');
   await expect(page.getByLabel('Entrada do componente')).toBeEnabled();
 }
 
@@ -22,7 +22,7 @@ test('catálogo → componente → exemplo → converter → copiar → limpar',
       },
     });
   });
-  await page.goto('/');
+  await page.goto('/devtools-hub/');
   await page.getByRole('searchbox').fill('percent-encoding');
   await page.getByRole('link', { name: /Componente de URL/ }).click();
   await expect(page).toHaveTitle('Componente de URL — DevTools Hub');
@@ -269,7 +269,7 @@ test('sem JavaScript mantém explicações e desabilita ações', async ({
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   try {
-    await page.goto('http://127.0.0.1:4321/ferramentas/url/');
+    await page.goto('http://127.0.0.1:4321/devtools-hub/ferramentas/url/');
     await expect(
       page.getByRole('heading', { name: 'Componente de URL', exact: true }),
     ).toBeVisible();

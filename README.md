@@ -2,7 +2,9 @@
 
 Utilitários para desenvolvedores em português, com processamento local no navegador. Astro gera páginas estáticas; React hidrata os controles interativos.
 
-**Estado:** [código público no GitHub](https://github.com/andersonmunizs/devtools-hub), com seis ferramentas funcionais; sem implantação pública do site. Veja as [verificações de CI](https://github.com/andersonmunizs/devtools-hub/actions/workflows/ci.yml), o [registro do repositório](docs/21-REPOSITORIO-PUBLICO.md) e a [prontidão do site](docs/18-PRE-RELEASE.md).
+**Estado:** [código público no GitHub](https://github.com/andersonmunizs/devtools-hub), com seis ferramentas funcionais; implantação no GitHub Pages após CI aprovada. Veja as [verificações de CI](https://github.com/andersonmunizs/devtools-hub/actions/workflows/ci.yml), o [registro do repositório](docs/21-REPOSITORIO-PUBLICO.md) e a [prontidão do site](docs/18-PRE-RELEASE.md).
+
+Destino do site: [DevTools Hub](https://andersonmunizs.github.io/devtools-hub/). Veja o [procedimento de publicação e limitações](docs/22-GITHUB-PAGES.md).
 
 ## Ferramentas
 
@@ -26,7 +28,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Abra o endereço informado pelo Astro. Para verificar o artefato estático, execute `pnpm build` e `pnpm preview`. Nenhum `.env`, token ou conta externa é necessário. UUID/SHA-256 exigem Web Crypto e contexto seguro, como HTTPS ou localhost confiável.
+Abra o endereço informado pelo Astro com o caminho `/devtools-hub/`. Para verificar o artefato estático, execute `pnpm build` e `pnpm preview`. Nenhum `.env`, token ou conta externa é necessário. UUID/SHA-256 exigem Web Crypto e contexto seguro, como HTTPS ou localhost confiável.
 
 ## Privacidade e limites
 

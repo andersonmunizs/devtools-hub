@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://andersonmunizs.github.io/devtools-hub/sitemap.xml

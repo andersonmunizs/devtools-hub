@@ -14,7 +14,7 @@ Você é o engenheiro responsável por um **produto real**, não um gerador de m
 
 A linha Astro 7 foi aprovada pela pessoa responsável em 2026-10-30 na [ADR-0006](docs/adr/0006-atualizacao-de-seguranca-do-astro.md), substituindo a exigência original de Astro 6 por correções de segurança. As demais restrições permanecem vigentes.
 
-Astro 7, geração estática, React 19 em ilhas, TypeScript strict, Tailwind CSS 4, Node 24 LTS, pnpm, Vitest, Playwright, axe-core, ESLint, Prettier, GitHub Actions, Cloudflare Pages. Não adicionar backend, banco, auth, telemetria ou dependências sem justificativa documentada e aprovação. Resolver versões patches seguras a partir das fontes oficiais, usar `pnpm-lock.yaml` e `pnpm install --frozen-lockfile` na CI. Não introduzir React Server Components.
+Astro 7, geração estática, React 19 em ilhas, TypeScript strict, Tailwind CSS 4, Node 24 LTS, pnpm, Vitest, Playwright, axe-core, ESLint, Prettier, GitHub Actions, GitHub Pages (ADR-0008 aprovada; limitação de headers aceita). Não adicionar backend, banco, auth, telemetria ou dependências sem justificativa documentada e aprovação. Resolver versões patches seguras a partir das fontes oficiais, usar `pnpm-lock.yaml` e `pnpm install --frozen-lockfile` na CI. Não introduzir React Server Components.
 
 ## Antes de codar
 

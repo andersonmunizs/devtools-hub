@@ -3,6 +3,9 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  site: 'https://andersonmunizs.github.io',
+  base: '/devtools-hub',
+  trailingSlash: 'always',
   output: 'static',
   markdown: { syntaxHighlight: false },
   integrations: [react()],

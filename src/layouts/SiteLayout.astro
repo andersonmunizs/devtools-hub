@@ -8,7 +8,7 @@ interface Props {
   noindex?: boolean;
 }
 const { title, description, noindex = false } = Astro.props;
-const isHome = Astro.url.pathname === '/';
+const isHome = Astro.url.pathname === '/devtools-hub/';
 ---
 
 <!doctype html>
@@ -18,8 +18,12 @@ const isHome = Astro.url.pathname === '/';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
+    <meta name="referrer" content="no-referrer" />
+    {!noindex && (
+      <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    )}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/devtools-hub/favicon.svg" type="image/svg+xml" />
     <title>{title} — DevTools Hub</title>
     <script is:inline>
       (() => {
@@ -46,7 +50,11 @@ const isHome = Astro.url.pathname === '/';
     </a>
     <header class="site-header">
       <div class="shell header-inner">
-        <a href="/" class="brand" aria-label="DevTools Hub — início">
+        <a
+          href="/devtools-hub/"
+          class="brand"
+          aria-label="DevTools Hub — início"
+        >
           <span class="brand-mark" aria-hidden="true">
             &lt;/&gt;
           </span>
@@ -55,13 +63,18 @@ const isHome = Astro.url.pathname === '/';
           </span>
         </a>
         <nav aria-label="Navegação principal">
-          <a href="/#ferramentas" aria-current={isHome ? 'page' : undefined}>
+          <a
+            href="/devtools-hub/#ferramentas"
+            aria-current={isHome ? 'page' : undefined}
+          >
             Ferramentas
           </a>
           <a
-            href="/privacidade/"
+            href="/devtools-hub/privacidade/"
             aria-current={
-              Astro.url.pathname.startsWith('/privacidade') ? 'page' : undefined
+              Astro.url.pathname.startsWith('/devtools-hub/privacidade')
+                ? 'page'
+                : undefined
             }
           >
             Privacidade
@@ -79,7 +92,7 @@ const isHome = Astro.url.pathname === '/';
           DevTools Hub <span class="footer-divider">/</span> Utilitários para o
           dia a dia.
         </p>
-        <a href="/privacidade/">
+        <a href="/devtools-hub/privacidade/">
           Como tratamos seus dados <span aria-hidden="true">↗</span>
         </a>
       </div>

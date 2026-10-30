@@ -6,7 +6,7 @@ import {
 } from '../../src/data/base64-example';
 
 async function openBase64(page: Page) {
-  await page.goto('/ferramentas/base64/');
+  await page.goto('/devtools-hub/ferramentas/base64/');
   await expect(page.getByLabel('Entrada de texto ou Base64')).toBeEnabled();
 }
 
@@ -22,7 +22,7 @@ test('catálogo → Base64 → codificar/decodificar Unicode → copiar → limp
       },
     });
   });
-  await page.goto('/');
+  await page.goto('/devtools-hub/');
   await page.getByRole('searchbox').fill('unicode');
   await expect(
     page.getByText('1 ferramenta encontrada', { exact: true }),
@@ -205,7 +205,9 @@ test('decodificar HTML continua sendo texto sem rede, storage ou URL de conteúd
   });
   expect(requests).toEqual([]);
   expect(errors).toEqual([]);
-  expect(page.url()).toBe('http://127.0.0.1:4321/ferramentas/base64/');
+  expect(page.url()).toBe(
+    'http://127.0.0.1:4321/devtools-hub/ferramentas/base64/',
+  );
   await page.reload();
   await expect(page.getByLabel('Entrada de texto ou Base64')).toHaveValue('');
   await expect(page.getByLabel('Resultado da conversão')).toHaveValue('');
@@ -274,7 +276,7 @@ test('conteúdo útil e controles honestos sem JavaScript', async ({
 }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4321/ferramentas/base64/');
+  await page.goto('http://127.0.0.1:4321/devtools-hub/ferramentas/base64/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'Base64 ↔ UTF-8',
   );
