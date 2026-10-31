@@ -14,7 +14,7 @@ import type { Tool } from '../../data/tools';
 import { searchTools } from '../../lib/search-tools';
 
 const identities = {
-  json: { icon: Braces, actions: 'Validar · Formatar · Minificar' },
+  json: { icon: Braces, actions: 'Validar · Formatar · Converter' },
   base64: { icon: Binary, actions: 'Codificar · Decodificar' },
   url: { icon: Link, actions: 'Codificar · Decodificar' },
   timestamp: { icon: Clock, actions: 'Segundos · Milissegundos · UTC' },

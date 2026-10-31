@@ -2,14 +2,18 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Check, Copy, Eraser, FlaskConical } from 'lucide-react';
 import { getTextInputSize, TEXT_INPUT_LIMIT_BYTES } from '../../lib/text-input';
 import type { ToolResult } from '../../types/tool-result';
+import type { ReactNode } from 'react';
 
 export interface TextToolAction {
   label: string;
   success: string;
   transform: (
     input: string,
+    signal?: AbortSignal,
   ) => ToolResult<string> | Promise<ToolResult<string>>;
   pendingMessage?: string;
+  cancellable?: boolean;
+  outputFormat?: 'JSON' | 'CSV' | 'XML' | 'YAML';
 }
 interface Props {
   id: string;
@@ -22,6 +26,17 @@ interface Props {
   outputWrap?: 'off' | 'soft';
   unavailableMessage?: string;
   actions: readonly TextToolAction[];
+  inputControls?: ReactNode;
+  outputActions?: (
+    output: string | null,
+    copy: {
+      onCopy: () => void;
+      copying: boolean;
+      status: string;
+      onNotice: (message: string) => void;
+      format: 'JSON' | 'CSV' | 'XML' | 'YAML';
+    },
+  ) => ReactNode;
 }
 
 const numbers = new Intl.NumberFormat('pt-BR');
@@ -37,6 +52,8 @@ export default function TextTool({
   outputWrap = 'off',
   unavailableMessage = '',
   actions,
+  inputControls,
+  outputActions,
 }: Props) {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState<string | null>(null);
@@ -45,6 +62,10 @@ export default function TextTool({
   const [copyError, setCopyError] = useState(false);
   const [copying, setCopying] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [cancellable, setCancellable] = useState(false);
+  const [resultFormat, setResultFormat] =
+    useState<TextToolAction['outputFormat']>();
+  const controller = useRef<AbortController | null>(null);
   const [confirmExample, setConfirmExample] = useState(false);
   const [ready, setReady] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -63,12 +84,15 @@ export default function TextTool({
     return () => {
       mounted.current = false;
       version.current += 1;
+      controller.current?.abort();
     };
   }, []);
 
   function invalidate() {
+    controller.current?.abort();
     version.current += 1;
     setOutput(null);
+    setResultFormat(undefined);
     setError('');
     setStatus('');
     setCopyError(false);
@@ -82,18 +106,22 @@ export default function TextTool({
     if (processingInFlight.current) return;
     invalidate();
     const currentVersion = version.current;
+    const currentController = new AbortController();
+    controller.current = currentController;
     try {
-      const pending = action.transform(input);
+      const pending = action.transform(input, currentController.signal);
       let result: ToolResult<string>;
       if (pending instanceof Promise) {
         processingInFlight.current = true;
         setProcessing(true);
+        setCancellable(Boolean(action.cancellable));
         setStatus(action.pendingMessage ?? 'Processando…');
         result = await pending;
       } else result = pending;
       if (!mounted.current || currentVersion !== version.current) return;
       if (result.ok) {
         setOutput(result.value);
+        setResultFormat(action.outputFormat);
         setStatus(
           action.success +
             (result.value === '' ? ' O resultado vazio é válido.' : ''),
@@ -111,6 +139,7 @@ export default function TextTool({
       }
     } finally {
       processingInFlight.current = false;
+      if (controller.current === currentController) controller.current = null;
       if (mounted.current) setProcessing(false);
     }
   }
@@ -146,6 +175,9 @@ export default function TextTool({
 
   return (
     <section className="text-tool-workbench" aria-label={`Editor ${name}`}>
+      {inputControls && (
+        <div className="text-tool-settings">{inputControls}</div>
+      )}
       <div className="text-tool-panel text-tool-entry">
         <div className="text-tool-panel-header">
           <h2>
@@ -253,6 +285,19 @@ export default function TextTool({
             </button>
           ))}
         </div>
+        {processing && cancellable && (
+          <button
+            type="button"
+            className="tool-button"
+            onClick={() => {
+              invalidate();
+              setStatus('Conversão cancelada.');
+              inputRef.current?.focus();
+            }}
+          >
+            Cancelar conversão
+          </button>
+        )}
         {unavailableMessage && (
           <p className="notice" role="status">
             {unavailableMessage}
@@ -267,24 +312,37 @@ export default function TextTool({
       <div className="text-tool-panel text-tool-result">
         <div className="text-tool-panel-header">
           <h2>
-            <label htmlFor={`${id}-output`}>{outputLabel}</label>
+            <label htmlFor={`${id}-output`}>
+              {resultFormat ? `Resultado ${resultFormat}` : outputLabel}
+            </label>
           </h2>
-          <button
-            type="button"
-            className="tool-button"
-            disabled={output === null || copying}
-            aria-busy={copying}
-            onClick={() => {
-              void copyOutput();
-            }}
-          >
-            {status === 'Resultado copiado.' ? (
-              <Check size={16} aria-hidden="true" />
-            ) : (
-              <Copy size={16} aria-hidden="true" />
-            )}
-            {copying ? 'Copiando…' : 'Copiar resultado'}
-          </button>
+          <div className="text-tool-actions">
+            {outputActions?.(output, {
+              onCopy: () => {
+                void copyOutput();
+              },
+              copying,
+              status,
+              onNotice: setStatus,
+              format: resultFormat ?? 'JSON',
+            })}
+            <button
+              type="button"
+              className="tool-button"
+              disabled={output === null || copying}
+              aria-busy={copying}
+              onClick={() => {
+                void copyOutput();
+              }}
+            >
+              {status === 'Resultado copiado.' ? (
+                <Check size={16} aria-hidden="true" />
+              ) : (
+                <Copy size={16} aria-hidden="true" />
+              )}
+              {copying ? 'Copiando…' : 'Copiar resultado'}
+            </button>
+          </div>
         </div>
         <textarea
           id={`${id}-output`}

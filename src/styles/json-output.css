@@ -1,0 +1,65 @@
+.json-indentation,
+.json-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 13px;
+}
+.json-settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0;
+}
+.text-tool-settings {
+  grid-column: 1 / -1;
+}
+.json-settings > p {
+  flex-basis: 100%;
+  margin: 0;
+}
+.json-indentation select {
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--control-border);
+  border-radius: 8px;
+  min-height: 44px;
+  padding: 8px;
+}
+.json-expanded {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  padding: clamp(12px, 3vw, 32px);
+  border: 0;
+  color: var(--text);
+  background: var(--surface);
+}
+.json-expanded[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.json-expanded-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.text-tool-workbench .json-expanded textarea {
+  flex: 1;
+  min-height: 120px;
+  resize: none;
+}
+.json-expanded > p {
+  margin: 0;
+}
+.json-expanded .text-tool-actions {
+  flex-shrink: 0;
+}

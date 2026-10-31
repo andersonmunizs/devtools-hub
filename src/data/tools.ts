@@ -12,9 +12,20 @@ export const publishedTools: readonly Tool[] = [
     slug: 'json',
     name: 'Validador e formatador JSON',
     description:
-      'Valide, organize com dois espaços ou minifique JSON no navegador.',
+      'Valide, formate, minifique e converta JSON para CSV, XML ou YAML no navegador.',
     category: 'Dados e formatos',
-    keywords: ['validar', 'formatar', 'minificar', 'pretty print', 'compactar'],
+    keywords: [
+      'validar',
+      'formatar',
+      'minificar',
+      'pretty print',
+      'compactar',
+      'converter',
+      'json para csv',
+      'json para xml',
+      'json para yaml',
+      'exportar',
+    ],
   },
   {
     slug: 'base64',
