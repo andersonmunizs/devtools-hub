@@ -3,7 +3,7 @@ import { getTextInputSize, TEXT_INPUT_LIMIT_BYTES } from '../text-input';
 
 export const JSON_INPUT_LIMIT_BYTES = TEXT_INPUT_LIMIT_BYTES;
 export const JSON_OUTPUT_LIMIT_BYTES = 8_388_608;
-export type JsonMode = 'format' | 'minify';
+export type JsonMode = 'format' | 'minify' | 'validate';
 const encoder = new TextEncoder();
 
 export const getJsonInputSize = getTextInputSize;
@@ -20,6 +20,7 @@ interface Ancestor {
 function stringifyWithinBudget(
   parsed: unknown,
   mode: JsonMode,
+  indentation: number,
 ): string | undefined {
   const pretty = mode === 'format';
   const ancestors: Ancestor[] = [];
@@ -38,8 +39,8 @@ function stringifyWithinBudget(
       if (parent) {
         if (parent.children > 0)
           add(1); // comma
-        else if (pretty) add(1 + 2 * (depth - 1)); // parent's closing newline/indent
-        if (pretty) add(1 + 2 * depth); // child's newline/indent
+        else if (pretty) add(1 + indentation * (depth - 1)); // parent's closing newline/indent
+        if (pretty) add(1 + indentation * depth); // child's newline/indent
         if (!Array.isArray(parent.value))
           add(
             encoder.encode(JSON.stringify(key)).byteLength + (pretty ? 2 : 1),
@@ -63,13 +64,14 @@ function stringifyWithinBudget(
       }
       return value;
     },
-    pretty ? 2 : undefined,
+    pretty ? indentation : undefined,
   );
 }
 
 export function transformJson(
   input: string,
   mode: JsonMode,
+  indentation: 2 | 3 | 4 = 2,
 ): ToolResult<string> {
   const bytes = getJsonInputSize(input);
   if (bytes === null || bytes > JSON_INPUT_LIMIT_BYTES)
@@ -104,7 +106,8 @@ export function transformJson(
         };
   }
   try {
-    const value = stringifyWithinBudget(parsed, mode);
+    if (mode === 'validate') return { ok: true, value: input };
+    const value = stringifyWithinBudget(parsed, mode, indentation);
     if (value === undefined) throw new TypeError('No serialized result');
     return { ok: true, value };
   } catch (error: unknown) {

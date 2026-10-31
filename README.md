@@ -10,7 +10,7 @@ Destino do site: [DevTools Hub](https://andersonmunizs.github.io/devtools-hub/).
 
 | Ferramenta | Uso |
 | --- | --- |
-| JSON | Validar, formatar e minificar |
+| JSON | Validar, formatar com 2/3/4 espaços, minificar, ampliar resultado, converter para CSV/XML/YAML e baixar |
 | Base64 ↔ UTF-8 | Codificar/decodificar texto com Unicode |
 | Componente URL | Codificar/decodificar uma camada de um componente |
 | Tempo Unix | Converter segundos/milissegundos para UTC e fuso do navegador |

@@ -9,13 +9,14 @@ export default defineConfig({
   output: 'static',
   markdown: { syntaxHighlight: false },
   integrations: [react()],
-  vite: { plugins: [tailwindcss()] },
+  vite: { plugins: [tailwindcss()], worker: { format: 'es' } },
   devToolbar: { enabled: false },
   security: {
     csp: {
       directives: [
         "default-src 'self'",
         "connect-src 'none'",
+        "worker-src 'self'",
         "img-src 'self'",
         "font-src 'self'",
         "object-src 'none'",

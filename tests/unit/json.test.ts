@@ -163,6 +163,52 @@ describe('JSON nativo com limites', () => {
       }
     },
   );
+  it.each([3, 4] as const)(
+    'aplica orçamento exato com indentação %i',
+    (indentation) => {
+      const depth = indentation === 3 ? 720 : 580;
+      const make = (filler: number) =>
+        '['.repeat(depth) +
+        '["' +
+        'é'.repeat(filler) +
+        '"' +
+        ',0'.repeat(2999) +
+        ']' +
+        ']'.repeat(depth);
+      const base = new TextEncoder().encode(
+        JSON.stringify(JSON.parse(make(0)), null, indentation),
+      ).length;
+      const filler = Math.floor((JSON_OUTPUT_LIMIT_BYTES - base) / 2);
+      expect(filler).toBeGreaterThan(0);
+      const input = make(filler);
+      expect(getJsonInputSize(input)).toBeLessThan(JSON_INPUT_LIMIT_BYTES);
+      expect(transformJson(input, 'format', indentation)).toEqual({
+        ok: true,
+        value: JSON.stringify(JSON.parse(input), null, indentation),
+      });
+      expect(
+        transformJson(make(filler + 1), 'format', indentation),
+      ).toMatchObject({ ok: false, code: 'OUTPUT_TOO_LARGE' });
+    },
+  );
+  it('valida sem reserializar números, espaços ou chaves repetidas', () => {
+    const input = '{ "id":9007199254740993, "a":1,"a":2 }';
+    expect(transformJson(input, 'validate')).toEqual({
+      ok: true,
+      value: input,
+    });
+    expect(transformJson('{', 'validate')).toMatchObject({
+      ok: false,
+      code: 'INVALID_JSON',
+    });
+    expect(transformJson('', 'validate')).toMatchObject({
+      ok: false,
+      code: 'EMPTY_INPUT',
+    });
+    expect(
+      transformJson(' '.repeat(JSON_INPUT_LIMIT_BYTES + 1), 'validate'),
+    ).toMatchObject({ ok: false, code: 'INPUT_TOO_LARGE' });
+  });
   it('retorna erro de recursos para profundidade que excede o serializador', () => {
     const input = '['.repeat(20000) + '0' + ']'.repeat(20000);
     expect(transformJson(input, 'minify')).toMatchObject({

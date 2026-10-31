@@ -22,6 +22,16 @@ const tools: readonly Tool[] = [
 ];
 
 describe('busca local do catálogo', () => {
+  it.each(['csv', 'xml', 'yaml'])(
+    'encontra a conversão JSON para %s',
+    (format) => {
+      expect(
+        searchTools(publishedTools, `json para ${format}`).map(
+          (tool) => tool.slug,
+        ),
+      ).toEqual(['json']);
+    },
+  );
   it('encontra tarefas com várias palavras e sem acentos', () => {
     expect(
       searchTools(publishedTools, 'formatar json').map((tool) => tool.slug),

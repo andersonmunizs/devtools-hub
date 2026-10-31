@@ -2,11 +2,12 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import JsonTool from '../../components/react/JsonTool';
 import '../../styles/text-tool.css';
+import '../../styles/json-output.css';
 ---
 
 <SiteLayout
   title="Validador e formatador JSON"
-  description="Valide, formate com dois espaços ou minifique JSON no navegador. Sem enviar seu conteúdo para processamento remoto."
+  description="Valide, formate, minifique e converta JSON para CSV, XML ou YAML no navegador. Sem enviar conteúdo para processamento remoto."
 >
   <header class="tool-intro">
     <a href="/devtools-hub/#ferramentas" class="back-link">
@@ -16,10 +17,6 @@ import '../../styles/text-tool.css';
     <h1>Validador e formatador JSON</h1>
     <p class="tool-lead">
       Valide e organize JSON sem enviar conteúdo a um servidor.
-    </p>
-    <p class="local-processing">
-      Processado no seu navegador <span aria-hidden="true">·</span> Sem
-      histórico de conteúdo
     </p>
   </header>
   <JsonTool client:load />
@@ -33,9 +30,16 @@ import '../../styles/text-tool.css';
     <div>
       <h2 id="json-about">O que esta ferramenta faz</h2>
       <p>
-        Reconhece objetos, arrays e valores primitivos JSON. Formatar usa dois
-        espaços; minificar remove espaços desnecessários. O processamento
-        acontece somente ao acionar um botão.
+        Reconhece objetos, arrays e valores primitivos JSON. Formatar permite 2,
+        3 ou 4 espaços; minificar remove espaços desnecessários. Validar
+        preserva o texto original. O processamento acontece somente ao acionar
+        um botão.
+      </p>
+      <p>
+        Use Tela cheia para ampliar o resultado, com quebra de linhas opcional,
+        cópia e seleção manual. Esc retorna ao editor. Baixar salva um arquivo
+        local por sua solicitação; a retenção desse arquivo depende do
+        dispositivo.
       </p>
       <p>
         Não executa código, corrige texto ou ordena chaves por conta própria. A
@@ -63,6 +67,43 @@ import '../../styles/text-tool.css';
         Unicode segue as APIs nativas: surrogates isolados são escapados na
         saída. O contador usa o tamanho UTF-8 de <code>TextEncoder</code>, que
         conta esses casos como caractere de substituição, sem alterar a entrada.
+      </p>
+    </div>
+    <div>
+      <h2>Como os formatos são mapeados</h2>
+      <p>
+        CSV aceita um objeto ou uma lista não vazia de objetos. As colunas são a
+        união das chaves; campos ausentes e null viram células vazias. Objetos e
+        listas internos viram JSON compacto na célula. Os campos são cotados,
+        com linhas CRLF e vírgula ou ponto e vírgula como separador, sem BOM.
+        CSV não preserva os tipos JSON.
+      </p>
+      <p>
+        Cabeçalhos ou textos que possam iniciar fórmulas de planilha são
+        rejeitados sem alteração silenciosa. Não existe garantia universal para
+        todos os leitores de CSV: importe dados confiáveis como texto na
+        planilha.
+      </p>
+      <p>
+        XML usa raiz <code>json</code>, tags <code>entry</code>/
+        <code>item</code> e atributo <code>type</code>; chaves ficam em{' '}
+        <code>key</code>. Esse formato tipado não corresponde automaticamente ao
+        schema XML de uma API. Caracteres incompatíveis com XML 1.0 são
+        rejeitados, sem remoção.
+      </p>
+      <p>
+        YAML 1.2 mantém strings e chaves entre aspas, sem aliases, tags
+        customizadas ou inferência de datas. As conversões rejeitam números não
+        finitos e Unicode inválido. Números e chaves repetidas seguem
+        JSON.parse, com as limitações de precisão já descritas. O formato do
+        último resultado válido determina seu rótulo e a extensão do download.
+      </p>
+      <p>
+        Converter usa Worker local: até 128 níveis abaixo da raiz, 50.000
+        valores e contêineres e prazo de 5 segundos. Cancelar, editar ou limpar
+        encerra o trabalho anterior. A entrada continua limitada a 1 MiB e a
+        saída a 8 MiB. A estimativa conservadora de YAML pode recusar uma
+        estrutura cuja saída talvez coubesse, antes de alocar texto expansivo.
       </p>
     </div>
     <div>

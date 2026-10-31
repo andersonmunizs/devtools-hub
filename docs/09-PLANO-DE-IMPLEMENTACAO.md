@@ -237,3 +237,7 @@ Autorizada a preparação local para GitHub, com segurança. README público, gu
 ## 18. Publicação do código autorizada — 2026-10-30
 
 Criado [andersonmunizs/devtools-hub](https://github.com/andersonmunizs/devtools-hub) público, MIT com identidade pública `andersonmunizs`, autoria noreply e commit inicial enviado somente em `main`. Proteções de segredos/relatos privados e permissões restritas de Actions configuradas; CI Linux disparada. Reexecutados 286 unitários com sucesso, formato e scanner público sem achados nos padrões cobertos. Registro e limites em [21 — Repositório público](21-REPOSITORIO-PUBLICO.md). Nenhuma implantação do site; domínio, HTTPS, headers e demais gates de deploy continuam pendentes.
+
+## 19. Evolução local de JSON — 2026-10-30
+
+Tela cheia, indentação, validação explícita e download implementados localmente (docs/23). A pessoa responsável priorizou CSV/XML/YAML e aprovou contratos, Worker, limites e yaml@2.9.1 na ADR-0009. Conversores locais implementados, com arquivos e evidências em docs/24-CONVERSOES-JSON.md. Nenhum commit, push ou deploy dessas evoluções; preservar o conjunto local da fatia anterior. A auditoria atual encontrou um moderado no minimatch de desenvolvimento, triado em docs/24; produção sem vulnerabilidades conhecidas nesta consulta.
